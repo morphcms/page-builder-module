@@ -27,7 +27,7 @@ class RegisterPageBuilderNovaTool
     public function handle($event): array
     {
         return [
-            PageBuilderNovaTool::class,
+            PageBuilderNovaTool::make(),
         ];
     }
 }
