@@ -20,6 +20,5 @@ class PageBuilderNovaTool extends Tool
 
     public function menu(Request $request)
     {
-
     }
 }
