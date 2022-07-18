@@ -25,6 +25,6 @@
         "optimistdigital/nova-translatable": "^2.0.0",
         "laravel/scout": "^9.4",
         "whitecube/nova-flexible-content": "^v1.0.0",
-        "morphcms/morphling-module": "dev-main"
+        "morphcms/morphling-module": "^0.0.0"
     }
 }

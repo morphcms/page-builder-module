@@ -124,6 +124,6 @@ class PageBuilderServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return [PageBuilderService::class];
+        return [];
     }
 }

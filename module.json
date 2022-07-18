@@ -1,13 +1,17 @@
 {
     "name": "PageBuilder",
     "alias": "page-builder",
-    "description": "",
+    "description": "Build pages by using blocks.",
     "keywords": [],
-    "priority": 0,
+    "priority": 1,
     "providers": [
         "Modules\\PageBuilder\\Providers\\PageBuilderServiceProvider"
     ],
     "aliases": {},
     "files": [],
-    "requires": ["morphling"]
+    "requires": ["morphling"],
+    "minimumCoreVersion": "",
+    "title": "Page Builder",
+    "version":"0.0.0",
+    "author": "Binome Way"
 }
