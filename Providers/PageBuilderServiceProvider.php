@@ -5,6 +5,7 @@ namespace Modules\PageBuilder\Providers;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Nova;
 use Modules\PageBuilder\Contracts\ContentReadTimeResolver;
+use Modules\PageBuilder\Events\BootPageBuilder;
 use Modules\PageBuilder\Nova\Resources\Content;
 use Modules\PageBuilder\Observers\ContentObserver;
 use Modules\PageBuilder\Resolvers\DefaultContentReadTimeResolver;
@@ -22,6 +23,7 @@ class PageBuilderServiceProvider extends ServiceProvider
      */
     protected string $moduleNameLower = 'page-builder';
 
+
     /**
      * Boot the application events.
      *
@@ -34,11 +36,9 @@ class PageBuilderServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
 
-        Nova::resources([
-            Content::class,
-        ]);
-
         \Modules\PageBuilder\Models\Content::observe(ContentObserver::class);
+
+        event(new BootPageBuilder($this->app->make(PageBuilderService::class)));
     }
 
     /**
@@ -48,7 +48,7 @@ class PageBuilderServiceProvider extends ServiceProvider
      */
     public function registerTranslations()
     {
-        $langPath = resource_path('lang/modules/'.$this->moduleNameLower);
+        $langPath = resource_path('lang/modules/' . $this->moduleNameLower);
 
         if (is_dir($langPath)) {
             $this->loadTranslationsFrom($langPath, $this->moduleNameLower);
@@ -65,7 +65,7 @@ class PageBuilderServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower.'.php'),
+            module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
         ], 'config');
         $this->mergeConfigFrom(
             module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
@@ -79,13 +79,13 @@ class PageBuilderServiceProvider extends ServiceProvider
      */
     public function registerViews()
     {
-        $viewPath = resource_path('views/modules/'.$this->moduleNameLower);
+        $viewPath = resource_path('views/modules/' . $this->moduleNameLower);
 
         $sourcePath = module_path($this->moduleName, 'Resources/views');
 
         $this->publishes([
             $sourcePath => $viewPath,
-        ], ['views', $this->moduleNameLower.'-module-views']);
+        ], ['views', $this->moduleNameLower . '-module-views']);
 
         $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->moduleNameLower);
     }
@@ -94,8 +94,8 @@ class PageBuilderServiceProvider extends ServiceProvider
     {
         $paths = [];
         foreach (\Config::get('view.paths') as $path) {
-            if (is_dir($path.'/modules/'.$this->moduleNameLower)) {
-                $paths[] = $path.'/modules/'.$this->moduleNameLower;
+            if (is_dir($path . '/modules/' . $this->moduleNameLower)) {
+                $paths[] = $path . '/modules/' . $this->moduleNameLower;
             }
         }
 
@@ -110,10 +110,11 @@ class PageBuilderServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+        $this->app->register(EventServiceProvider::class);
         $this->app->bind(ContentReadTimeResolver::class, DefaultContentReadTimeResolver::class);
         $this->app->singleton(
             PageBuilderService::class,
-            fn () => new PageBuilderService(config($this->moduleNameLower, []))
+            fn() => new PageBuilderService(config($this->moduleNameLower, []))
         );
     }
 

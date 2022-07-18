@@ -2,20 +2,18 @@
 
 namespace Modules\PageBuilder\Utils;
 
+use Modules\Morphling\Traits\TableHelper;
+
+/**
+ * @method static contents()
+ * @method static blocks()
+ *
+ */
 class Table
 {
-    protected static function prefix($table): string
-    {
-        return Table.phpconfig('page-builder.table_prefix');
-    }
+    use TableHelper;
 
-    public static function blocks(): string
-    {
-        return static::prefix('blocks');
-    }
+    public static string $configPath = 'page-builder.table_prefix';
 
-    public static function contents(): string
-    {
-        return static::prefix('contents');
-    }
+
 }

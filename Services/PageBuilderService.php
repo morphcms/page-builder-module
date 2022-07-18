@@ -53,14 +53,14 @@ class PageBuilderService
     }
 
     #[Pure]
- public function hasAnyBlocks(): bool
- {
-     return $this->layouts->count() > 0;
- }
+    public function hasAnyBlocks(): bool
+    {
+        return $this->layouts->count() > 0;
+    }
 
     #[Pure]
- public function hasSearchableLayouts(): bool
- {
-     return $this->layouts->count() > $this->searchableThreshold;
- }
+    public function hasSearchableLayouts(): bool
+    {
+        return $this->layouts->count() > $this->searchableThreshold;
+    }
 }
