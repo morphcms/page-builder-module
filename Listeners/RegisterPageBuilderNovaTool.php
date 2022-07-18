@@ -2,8 +2,6 @@
 
 namespace Modules\PageBuilder\Listeners;
 
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Modules\PageBuilder\Nova\PageBuilderNovaTool;
 
 class RegisterPageBuilderNovaTool
@@ -21,7 +19,7 @@ class RegisterPageBuilderNovaTool
     /**
      * Handle the event.
      *
-     * @param object $event
+     * @param  object  $event
      * @return array
      */
     public function handle($event): array
