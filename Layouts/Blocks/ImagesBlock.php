@@ -2,6 +2,7 @@
 
 namespace Modules\PageBuilder\Layouts\Blocks;
 
+use function __;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
@@ -9,12 +10,10 @@ use Laravel\Nova\Fields\Textarea;
 use Spatie\MediaLibrary\HasMedia;
 use Whitecube\NovaFlexibleContent\Concerns\HasMediaLibrary;
 use Whitecube\NovaFlexibleContent\Layouts\Layout;
-use function __;
 
 class ImagesBlock extends Layout implements HasMedia
 {
     use HasMediaLibrary;
-
 
     /**
      * The layout's unique identifier
@@ -43,7 +42,7 @@ class ImagesBlock extends Layout implements HasMedia
                     'stack' => 'Stacked',
                     'grid' => 'Grid',
                 ])
-                ->default(fn() => 'stack')
+                ->default(fn () => 'stack')
                 ->displayUsingLabels()
                 ->required(),
 

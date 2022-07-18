@@ -4,13 +4,14 @@ namespace Modules\PageBuilder\Services;
 
 use Illuminate\Support\Collection;
 use JetBrains\PhpStorm\Pure;
-use Modules\PageBuilder\Layouts\BlockLayout;
 use Whitecube\NovaFlexibleContent\Layouts\LayoutInterface;
 
 class PageBuilderService
 {
     private Collection $layouts;
+
     private int $searchableThreshold;
+
     private array $types = [];
 
     public function __construct(array $config)
@@ -51,13 +52,15 @@ class PageBuilderService
         return $this->layouts;
     }
 
-    #[Pure] public function hasAnyBlocks(): bool
-    {
-        return $this->layouts->count() > 0;
-    }
+    #[Pure]
+ public function hasAnyBlocks(): bool
+ {
+     return $this->layouts->count() > 0;
+ }
 
-    #[Pure] public function hasSearchableLayouts(): bool
-    {
-        return $this->layouts->count() > $this->searchableThreshold;
-    }
+    #[Pure]
+ public function hasSearchableLayouts(): bool
+ {
+     return $this->layouts->count() > $this->searchableThreshold;
+ }
 }

@@ -3,13 +3,11 @@
 namespace Modules\PageBuilder\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Modules\PageBuilder\Contracts\ContentReadTimeResolver;
-use Modules\PageBuilder\Contracts\CountsWords;
-use Modules\PageBuilder\Facades\PageBuilder;
 use Modules\PageBuilder\Models\Content;
 
 class CalculateReadTimeJob implements ShouldQueue

@@ -2,9 +2,9 @@
 
 namespace Modules\PageBuilder\Layouts\Blocks;
 
+use function __;
 use Laravel\Nova\Fields\Code;
 use Whitecube\NovaFlexibleContent\Layouts\Layout;
-use function __;
 
 class VideoEmbedBlock extends Layout
 {

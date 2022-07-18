@@ -14,19 +14,18 @@ class UniqueContentLocaleRule implements Rule
      */
     public function __construct(protected Content $model)
     {
-
     }
 
     /**
      * Determine if the validation rule passes.
      *
-     * @param string $attribute
-     * @param mixed $value
+     * @param  string  $attribute
+     * @param  mixed  $value
      * @return bool
      */
     public function passes($attribute, $value): bool
     {
-        if($this->model->exists && $value === $this->model->locale){
+        if ($this->model->exists && $value === $this->model->locale) {
             return true;
         }
 

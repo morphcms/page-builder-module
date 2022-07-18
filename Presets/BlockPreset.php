@@ -2,20 +2,17 @@
 
 namespace Modules\PageBuilder\Presets;
 
-use Modules\PageBuilder\Flexible\BlockResolver;
 use Modules\PageBuilder\Services\PageBuilderService;
 use Whitecube\NovaFlexibleContent\Flexible;
 use Whitecube\NovaFlexibleContent\Layouts\Preset;
 
 class BlockPreset extends Preset
 {
-
     /**
      * Create a new preset instance
      */
     public function __construct(protected PageBuilderService $builder)
     {
-
     }
 
     /**
@@ -28,10 +25,9 @@ class BlockPreset extends Preset
         $field->fullWidth();
         $field->collapsed();
 
-        $this->builder->blocks()->each(fn($block) => $field->addLayout($block));
+        $this->builder->blocks()->each(fn ($block) => $field->addLayout($block));
 
         if ($this->builder->hasSearchableLayouts()) {
-
             $field->menu(
                 'flexible-search-menu',
                 [

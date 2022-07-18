@@ -21,21 +21,10 @@
         }
     },
     "require": {
-        "laravel/nova": "^4.0",
         "ebess/advanced-nova-media-library": "^4.0",
         "optimistdigital/nova-translatable": "^2.0.0",
         "laravel/scout": "^9.4",
         "whitecube/nova-flexible-content": "^v1.0.0",
         "morphcms/morphling-module": "dev-main"
-    },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://nova.laravel.com/"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/morphcms/morphling-module.git"
-        }
-    ]
+    }
 }

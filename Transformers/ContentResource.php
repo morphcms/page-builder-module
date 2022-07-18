@@ -3,11 +3,9 @@
 namespace Modules\PageBuilder\Transformers;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Whitecube\NovaFlexibleContent\Concerns\HasFlexible;
 
 class ContentResource extends JsonResource
 {
-
     /**
      * Transform the resource into an array.
      *

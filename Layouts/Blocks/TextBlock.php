@@ -15,7 +15,6 @@ use Whitecube\NovaFlexibleContent\Layouts\Layout;
  */
 class TextBlock extends Layout implements CountsWords, IndexBlock
 {
-
     use HasTranslations;
 
     public array $translatable = ['value'];
@@ -45,7 +44,6 @@ class TextBlock extends Layout implements CountsWords, IndexBlock
             Trix::make(null, 'value')->translatable()->stacked(),
         ];
     }
-
 
     #[Pure]
     public function countWords(): int

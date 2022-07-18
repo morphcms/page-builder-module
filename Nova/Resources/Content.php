@@ -3,30 +3,20 @@
 namespace Modules\PageBuilder\Nova\Resources;
 
 use App\Nova\Resource;
-use Eminiarts\Tabs\Tab;
-use Eminiarts\Tabs\Tabs;
-use Eminiarts\Tabs\Traits\HasTabs;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Laravel\Nova\Fields\Badge;
-use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\MorphOne;
 use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 use Modules\Blog\Enums\PostStatus;
-use Modules\Blog\Nova\Resources\Post;
 use Modules\Morphling\Nova\Actions\UpdateStatus;
 use Modules\Morphling\Nova\Filters\ByStatus;
 use Modules\PageBuilder\Enum\ContentStatus;
 use Modules\PageBuilder\Facades\PageBuilder;
 use Modules\PageBuilder\Models\Content as ContentModel;
 use Modules\PageBuilder\Presets\BlockPreset;
-use Modules\PageBuilder\Utils\Table;
 use Whitecube\NovaFlexibleContent\Flexible;
 
 /**
@@ -34,7 +24,6 @@ use Whitecube\NovaFlexibleContent\Flexible;
  */
 class Content extends Resource
 {
-
     public static string $model = ContentModel::class;
 
     public static $title = 'id';
@@ -47,34 +36,33 @@ class Content extends Resource
 
     public function fields(NovaRequest $request): array
     {
-
         return [
             ID::make()->sortable(),
             MorphTo::make('Contentable')->types(PageBuilder::types()),
 
             Badge::make(__('Status'), 'status')
-                ->displayUsing(fn() => PostStatus::from($this->status)->value)
+                ->displayUsing(fn () => PostStatus::from($this->status)->value)
                 ->map(PostStatus::getNovaBadgeColors())
                 ->exceptOnForms(),
 
-            Text::make('Created At', fn() => $this->created_at->toFormattedDateString())
+            Text::make('Created At', fn () => $this->created_at->toFormattedDateString())
 
                 ->exceptOnForms(),
-            Text::make('Last Updated At', fn() => $this->update_at?->diffForHumans() ?? 'N/A')->exceptOnForms(),
+            Text::make('Last Updated At', fn () => $this->update_at?->diffForHumans() ?? 'N/A')->exceptOnForms(),
 
             Number::make(__('Read Time'), 'read_time')
                 ->onlyOnDetail(),
 
             Panel::make('Blocks', [
                 Flexible::make('', 'data')->preset(BlockPreset::class),
-            ])
+            ]),
         ];
     }
 
     public function filters(NovaRequest $request): array
     {
         return [
-            ByStatus::make(ContentStatus::class)
+            ByStatus::make(ContentStatus::class),
         ];
     }
 
