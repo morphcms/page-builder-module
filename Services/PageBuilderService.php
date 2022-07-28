@@ -11,16 +11,22 @@ class PageBuilderService
     private Collection $layouts;
 
     private int $searchableThreshold;
-
-    private array $types = [];
+    private array $types;
+    private array $config;
 
     public function __construct(array $config)
     {
         $this->layouts = collect();
+        $this->config = $config;
         $this->searchableThreshold = $config['layouts_searchable_threshold'];
         $this->types = $config['resource_types'];
 
         $this->register($config['blocks']);
+    }
+
+    public function preset()
+    {
+        return $this->config['preset'];
     }
 
     public function register(array|Collection $blocks): static

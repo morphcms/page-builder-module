@@ -2,7 +2,7 @@
 
 namespace Modules\PageBuilder\Contracts;
 
-interface IndexBlock
+interface IBlockIndexing
 {
     public function getIndexValue(): string;
 }

@@ -6,7 +6,7 @@ use Modules\PageBuilder\Contracts\ContentReadTimeResolver;
 use Modules\PageBuilder\Contracts\CountsWords;
 use Modules\PageBuilder\Models\Content;
 
-class DefaultContentReadTimeResolver implements ContentReadTimeResolver
+class DefaultIContentReadTimeResolver implements ContentReadTimeResolver
 {
     public function calculate(Content $content, int $wordsPerMinute = 265): int
     {

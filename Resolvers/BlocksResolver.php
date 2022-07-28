@@ -2,14 +2,22 @@
 
 namespace Modules\PageBuilder\Resolvers;
 
+use Modules\PageBuilder\Contracts\IBlocksResolver;
 use Modules\PageBuilder\Models\Content;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Whitecube\NovaFlexibleContent\Layouts\Layout;
 
-class BlocksResolver
+class BlocksResolver implements IBlocksResolver
 {
-    public function __invoke(Content $model): \Illuminate\Support\Collection|\Whitecube\NovaFlexibleContent\Layouts\Collection
+    private function getLayoutDataLocalized($layout): \Illuminate\Support\Collection
+    {
+        // This is needed to work with the package spatie/translations
+        return collect($layout->toArray())
+            ->mapWithKeys(fn ($value, $key) => [$key => $layout->{$key}]);
+    }
+
+    public function resolve(Content $model): \Illuminate\Support\Collection|\Whitecube\NovaFlexibleContent\Layouts\Collection
     {
         return $model->data->map(function (Layout $layout) use ($model) {
             $layout->setModel($model);
@@ -28,12 +36,5 @@ class BlocksResolver
 
             return $result;
         });
-    }
-
-    private function getLayoutDataLocalized($layout): \Illuminate\Support\Collection
-    {
-        // This is needed to work with the package spatie/translations
-        return collect($layout->toArray())
-            ->mapWithKeys(fn ($value, $key) => [$key => $layout->{$key}]);
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Modules\PageBuilder\Contracts\ContentReadTimeResolver;
+use Modules\PageBuilder\Contracts\IContentReadTimeResolver;
 use Modules\PageBuilder\Models\Content;
 
 class CalculateReadTimeJob implements ShouldQueue
@@ -31,7 +31,7 @@ class CalculateReadTimeJob implements ShouldQueue
      */
     public function handle()
     {
-        $resolver = app(ContentReadTimeResolver::class);
+        $resolver = app(IContentReadTimeResolver::class);
 
         $this->content->read_time = $resolver->calculate($this->content, $this->wordsPerMinute);
 

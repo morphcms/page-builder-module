@@ -70,7 +70,7 @@ class Content extends Resource
                 ->onlyOnDetail(),
 
             Panel::make(__('Blocks'), [
-                Flexible::make('', 'data')->preset(BlockPreset::class),
+                Flexible::make('', 'data')->preset(PageBuilder::preset()),
             ]),
         ];
     }

@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Carbon;
 use Modules\Morphling\Traits\HasOwner;
 use Modules\PageBuilder\Casts\BlocksFlexibleCast;
-use Modules\PageBuilder\Contracts\IndexBlock;
+use Modules\PageBuilder\Contracts\IBlockIndexing;
+use Modules\PageBuilder\Contracts\IBlocksResolver;
 use Modules\PageBuilder\Enum\ContentStatus;
 use Modules\PageBuilder\Resolvers\BlocksResolver;
 use Modules\PageBuilder\Utils\Table;
@@ -83,7 +84,7 @@ class Content extends Model implements HasMedia
     public function blocks(): Attribute
     {
         return new Attribute(
-            get: fn () => app(BlocksResolver::class)($this)
+            get: fn () => app(IBlocksResolver::class)->resolve($this)
         );
     }
 
@@ -96,8 +97,8 @@ class Content extends Model implements HasMedia
     public function getIndexData(): string
     {
         return $this->data
-            ->filter(fn ($layout) => $layout instanceof IndexBlock)
-            ->map(fn (IndexBlock $layout) => $layout->getIndexValue())
+            ->filter(fn ($layout) => $layout instanceof IBlockIndexing)
+            ->map(fn (IBlockIndexing $layout) => $layout->getIndexValue())
             ->join(PHP_EOL);
     }
 }

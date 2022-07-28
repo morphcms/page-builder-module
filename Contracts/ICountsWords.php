@@ -5,7 +5,7 @@ namespace Modules\PageBuilder\Contracts;
 /**
  * Counts the words inside your content.
  */
-interface CountsWords
+interface ICountsWords
 {
     public function countWords(): int;
 }
