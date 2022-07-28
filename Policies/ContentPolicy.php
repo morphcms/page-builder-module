@@ -5,6 +5,7 @@ namespace Modules\PageBuilder\Policies;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Modules\PageBuilder\Enum\ContentPermission;
+use Modules\PageBuilder\Enum\ContentStatus;
 use Modules\PageBuilder\Models\Content;
 
 class ContentPolicy
@@ -14,16 +15,24 @@ class ContentPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(?User $user): bool
     {
+        if (!$user) {
+            return true;
+        }
+
         return $user->canAny([ContentPermission::ViewAny->value, ContentPermission::ViewOwned->value]);
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Content $content): bool
+    public function view(?User $user, Content $content): bool
     {
+        if(!$user){
+            return ContentStatus::from($content->status) === ContentStatus::Published;
+        }
+
         if ($content->isOwnedBy($user)) {
             return true;
         }
