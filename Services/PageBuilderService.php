@@ -4,6 +4,8 @@ namespace Modules\PageBuilder\Services;
 
 use Illuminate\Support\Collection;
 use JetBrains\PhpStorm\Pure;
+use Modules\PageBuilder\Contracts\IContentReadTimeResolver;
+use Modules\PageBuilder\Models\Content;
 use Whitecube\NovaFlexibleContent\Layouts\LayoutInterface;
 
 class PageBuilderService
@@ -29,6 +31,12 @@ class PageBuilderService
     public function preset()
     {
         return $this->config['preset'];
+    }
+
+
+    public function calculateReadTime(Content $content): int
+    {
+        return app(IContentReadTimeResolver::class)->calculate($content, $this->config['words_per_minute']);
     }
 
     public function register(array|Collection $blocks): static

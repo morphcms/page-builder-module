@@ -9,7 +9,7 @@ use Modules\PageBuilder\Contracts\IContentReadTimeResolver;
 use Modules\PageBuilder\Events\BootPageBuilder;
 use Modules\PageBuilder\Observers\ContentObserver;
 use Modules\PageBuilder\Resolvers\BlocksResolver;
-use Modules\PageBuilder\Resolvers\DefaultIContentReadTimeResolver;
+use Modules\PageBuilder\Resolvers\DefaultContentReadTimeResolver;
 use Modules\PageBuilder\Services\PageBuilderService;
 
 class PageBuilderServiceProvider extends ServiceProvider
@@ -112,7 +112,7 @@ class PageBuilderServiceProvider extends ServiceProvider
     {
         $this->app->register(RouteServiceProvider::class);
         $this->app->register(EventServiceProvider::class);
-        $this->app->bind(IContentReadTimeResolver::class, DefaultIContentReadTimeResolver::class);
+        $this->app->bind(IContentReadTimeResolver::class, DefaultContentReadTimeResolver::class);
         $this->app->bind(IBlocksResolver::class, BlocksResolver::class);
         $this->app->singleton(
             PageBuilderService::class,

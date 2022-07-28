@@ -13,6 +13,7 @@ use Modules\PageBuilder\Casts\BlocksFlexibleCast;
 use Modules\PageBuilder\Contracts\IBlockIndexing;
 use Modules\PageBuilder\Contracts\IBlocksResolver;
 use Modules\PageBuilder\Enum\ContentStatus;
+use Modules\PageBuilder\Facades\PageBuilder;
 use Modules\PageBuilder\Utils\Table;
 use Spatie\EloquentSortable\SortableTrait;
 use Spatie\MediaLibrary\HasMedia;
@@ -20,6 +21,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Whitecube\NovaFlexibleContent\Concerns\HasFlexible;
 use Whitecube\NovaFlexibleContent\Layouts\Collection;
 use Whitecube\NovaFlexibleContent\Layouts\LayoutInterface;
+use function Illuminate\Events\queueable;
 
 /**
  * @property Collection<LayoutInterface> $data
@@ -49,6 +51,16 @@ class Content extends Model implements HasMedia
         'sort_when_creating' => true,
         'sort_on_has_many' => true,
     ];
+
+
+    protected static function booted()
+    {
+        static::updated(queueable(function (Content $content) {
+            $time = PageBuilder::calculateReadTime($content);
+            $content->read_time = $time;
+            $content->saveQuietly();
+        }));
+    }
 
     public function getTable(): string
     {
@@ -83,7 +95,7 @@ class Content extends Model implements HasMedia
     public function blocks(): Attribute
     {
         return new Attribute(
-            get: fn () => app(IBlocksResolver::class)->resolve($this)
+            get: fn() => app(IBlocksResolver::class)->resolve($this)
         );
     }
 
@@ -96,8 +108,8 @@ class Content extends Model implements HasMedia
     public function getIndexData(): string
     {
         return $this->data
-            ->filter(fn ($layout) => $layout instanceof IBlockIndexing)
-            ->map(fn (IBlockIndexing $layout) => $layout->getIndexValue())
+            ->filter(fn($layout) => $layout instanceof IBlockIndexing)
+            ->map(fn(IBlockIndexing $layout) => $layout->getIndexValue())
             ->join(PHP_EOL);
     }
 }

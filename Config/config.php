@@ -10,9 +10,14 @@ return [
      */
     'create_default' => true,
 
+    /**
+     * Defines how to calculate the read time based on words per minute.
+     */
+    'words_per_minute' => 265,
+
     'resource_types' => [],
 
-    'read_time_resolver' => \Modules\PageBuilder\Resolvers\DefaultIContentReadTimeResolver::class,
+    'read_time_resolver' => \Modules\PageBuilder\Resolvers\DefaultContentReadTimeResolver::class,
     'preset' => \Modules\PageBuilder\Presets\BlockPreset::class,
     'blocks' => [
         \Modules\PageBuilder\Layouts\Blocks\HeadingBlock::class,
