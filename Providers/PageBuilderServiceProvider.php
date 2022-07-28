@@ -3,6 +3,7 @@
 namespace Modules\PageBuilder\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Laravel\Nova\Nova;
 use Modules\PageBuilder\Contracts\IBlocksResolver;
 use Modules\PageBuilder\Contracts\IContentReadTimeResolver;
 use Modules\PageBuilder\Events\BootPageBuilder;
@@ -35,9 +36,10 @@ class PageBuilderServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
 
-        \Modules\PageBuilder\Models\Content::observe(ContentObserver::class);
+        Nova::booted(function () {
+            event(new BootPageBuilder($this->app->make(PageBuilderService::class)));
+        });
 
-        event(new BootPageBuilder($this->app->make(PageBuilderService::class)));
     }
 
     /**
