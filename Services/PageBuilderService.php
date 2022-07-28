@@ -33,7 +33,6 @@ class PageBuilderService
         return $this->config['preset'];
     }
 
-
     public function calculateReadTime(Content $content): int
     {
         return app(IContentReadTimeResolver::class)->calculate($content, $this->config['words_per_minute']);
