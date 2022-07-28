@@ -20,6 +20,7 @@ trait HasContentsNova
 
     /**
      * This allows only one content per resource
+     *
      * @return HasOne
      */
     public function contentField(): HasOne

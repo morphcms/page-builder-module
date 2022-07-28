@@ -11,7 +11,9 @@ class PageBuilderService
     private Collection $layouts;
 
     private int $searchableThreshold;
+
     private array $types;
+
     private array $config;
 
     public function __construct(array $config)
