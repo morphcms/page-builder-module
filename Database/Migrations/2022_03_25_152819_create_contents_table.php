@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\Schema;
 use Modules\PageBuilder\Enum\ContentStatus;
 use Modules\PageBuilder\Utils\Table;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      *

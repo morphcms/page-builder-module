@@ -10,6 +10,7 @@ use Modules\PageBuilder\Enum\ContentPermission;
 class PageBuilderDatabaseSeeder extends Seeder
 {
     use AclSeederHelper;
+
     /**
      * Run the database seeds.
      *

@@ -12,7 +12,6 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
-use Modules\Blog\Enums\PostStatus;
 use Modules\Morphling\Nova\Actions\UpdateStatus;
 use Modules\Morphling\Nova\Filters\ByStatus;
 use Modules\PageBuilder\Enum\ContentStatus;
@@ -47,7 +46,7 @@ class Content extends Resource
                 ->types(PageBuilder::types())
                 ->searchable(),
 
-            BelongsTo::make(__("Author"), 'user', User::class)
+            BelongsTo::make(__('Author'), 'user', User::class)
                 ->searchable()
                 ->filterable()
                 ->sortable()

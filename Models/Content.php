@@ -17,11 +17,8 @@ use Modules\PageBuilder\Utils\Table;
 use Spatie\EloquentSortable\SortableTrait;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Spatie\Translatable\HasTranslations;
 use Whitecube\NovaFlexibleContent\Concerns\HasFlexible;
 use Whitecube\NovaFlexibleContent\Layouts\Collection;
-use Whitecube\NovaFlexibleContent\Layouts\Layout;
 use Whitecube\NovaFlexibleContent\Layouts\LayoutInterface;
 
 /**
@@ -89,6 +86,7 @@ class Content extends Model implements HasMedia
             get: fn () => app(BlocksResolver::class)($this)
         );
     }
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('images');

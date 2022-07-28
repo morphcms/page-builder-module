@@ -95,9 +95,4 @@ class ContentPolicy
 
         return $user->can(ContentPermission::Delete->value);
     }
-
-
-
-
-
 }
