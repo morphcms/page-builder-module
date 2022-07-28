@@ -41,9 +41,18 @@ trait HasContents
         return $this->morphOne(Content::class, 'contentable');
     }
 
-    public function contentLatestPublished()
+    public function contentPublished()
     {
-        return $this->content()->latest()->published();
+        return $this->content()
+            ->latest()
+            ->published();
+    }
+
+    public function contentsPublished()
+    {
+        return $this->contents()
+            ->latest()
+            ->published();
     }
 
     public function contents(): MorphMany
