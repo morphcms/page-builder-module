@@ -108,7 +108,7 @@ class PageBuilderServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->register(RouteServiceProvider::class);
+        //$this->app->register(RouteServiceProvider::class);
         $this->app->register(EventServiceProvider::class);
         $this->app->bind(IContentReadTimeResolver::class, DefaultContentReadTimeResolver::class);
         $this->app->bind(IBlocksResolver::class, BlocksResolver::class);
