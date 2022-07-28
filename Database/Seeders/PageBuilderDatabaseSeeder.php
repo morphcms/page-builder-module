@@ -4,9 +4,12 @@ namespace Modules\PageBuilder\Database\Seeders;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
+use Modules\Acl\Utils\AclSeederHelper;
+use Modules\PageBuilder\Enum\ContentPermission;
 
 class PageBuilderDatabaseSeeder extends Seeder
 {
+    use AclSeederHelper;
     /**
      * Run the database seeds.
      *
@@ -16,6 +19,8 @@ class PageBuilderDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        // $this->call("OthersTableSeeder");
+        $this->acl('page-builder')
+            ->attachEnum(ContentPermission::class, ContentPermission::All->value)
+            ->create();
     }
 }

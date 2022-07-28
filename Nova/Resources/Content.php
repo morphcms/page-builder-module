@@ -3,7 +3,9 @@
 namespace Modules\PageBuilder\Nova\Resources;
 
 use App\Nova\Resource;
+use App\Nova\User;
 use Laravel\Nova\Fields\Badge;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Number;
@@ -17,6 +19,7 @@ use Modules\PageBuilder\Enum\ContentStatus;
 use Modules\PageBuilder\Facades\PageBuilder;
 use Modules\PageBuilder\Models\Content as ContentModel;
 use Modules\PageBuilder\Presets\BlockPreset;
+use Outl1ne\NovaSortable\Traits\HasSortableRows;
 use Whitecube\NovaFlexibleContent\Flexible;
 
 /**
@@ -24,13 +27,15 @@ use Whitecube\NovaFlexibleContent\Flexible;
  */
 class Content extends Resource
 {
+    use HasSortableRows;
+
     public static string $model = ContentModel::class;
 
-    public static $title = 'id';
+    public static $title = 'handle';
 
     public static $displayInNavigation = false;
 
-    public static $search = ['id'];
+    public static $search = ['id', 'handle'];
 
     public static $tableStyle = 'tight';
 
@@ -38,22 +43,34 @@ class Content extends Resource
     {
         return [
             ID::make()->sortable(),
-            MorphTo::make('Contentable')->types(PageBuilder::types()),
+            MorphTo::make(__('Contentable'))
+                ->types(PageBuilder::types())
+                ->searchable(),
+
+            BelongsTo::make(__("Author"), 'user', User::class)
+                ->searchable()
+                ->filterable()
+                ->sortable()
+                ->nullable(),
+
+            Text::make(__('Handle'), 'handle')
+                ->help(__('Used by system as a reference.'))
+                ->nullable(),
 
             Badge::make(__('Status'), 'status')
-                ->displayUsing(fn () => PostStatus::from($this->status)->value)
-                ->map(PostStatus::getNovaBadgeColors())
+                ->displayUsing(fn () => $this->status->value)
+                ->map(ContentStatus::getNovaBadgeColors())
                 ->exceptOnForms(),
 
-            Text::make('Created At', fn () => $this->created_at->toFormattedDateString())
-
+            Text::make(__('Created At'), fn () => $this->created_at->toFormattedDateString())
                 ->exceptOnForms(),
-            Text::make('Last Updated At', fn () => $this->update_at?->diffForHumans() ?? 'N/A')->exceptOnForms(),
+
+            Text::make(__('Last Updated At'), fn () => $this->update_at?->diffForHumans() ?? 'N/A')->exceptOnForms(),
 
             Number::make(__('Read Time'), 'read_time')
                 ->onlyOnDetail(),
 
-            Panel::make('Blocks', [
+            Panel::make(__('Blocks'), [
                 Flexible::make('', 'data')->preset(BlockPreset::class),
             ]),
         ];
