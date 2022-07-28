@@ -24,7 +24,6 @@ trait HasContents
                     'handle' => 'default',
                 ]);
             }
-
         });
 
         // Remove all contents related to this model.
