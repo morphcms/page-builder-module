@@ -31,7 +31,7 @@ class BlockPreset extends Preset
             $field->menu(
                 'flexible-search-menu',
                 [
-                    'selectLabel' => 'Press enter to select',
+                    'selectLabel' => __('Press enter to select'),
                     // the property on the layout entry
                     'label' => 'title',
                     // 'top', 'bottom', 'auto'
