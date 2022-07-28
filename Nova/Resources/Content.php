@@ -17,7 +17,6 @@ use Modules\Morphling\Nova\Filters\ByStatus;
 use Modules\PageBuilder\Enum\ContentStatus;
 use Modules\PageBuilder\Facades\PageBuilder;
 use Modules\PageBuilder\Models\Content as ContentModel;
-use Modules\PageBuilder\Presets\BlockPreset;
 use Outl1ne\NovaSortable\Traits\HasSortableRows;
 use Whitecube\NovaFlexibleContent\Flexible;
 

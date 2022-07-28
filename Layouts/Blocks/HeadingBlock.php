@@ -5,8 +5,8 @@ namespace Modules\PageBuilder\Layouts\Blocks;
 use Illuminate\Support\Str;
 use JetBrains\PhpStorm\Pure;
 use Laravel\Nova\Fields\Text;
-use Modules\PageBuilder\Contracts\ICountsWords;
 use Modules\PageBuilder\Contracts\IBlockIndexing;
+use Modules\PageBuilder\Contracts\ICountsWords;
 use Spatie\Translatable\HasTranslations;
 use Whitecube\NovaFlexibleContent\Layouts\Layout;
 

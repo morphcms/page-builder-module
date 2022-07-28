@@ -13,7 +13,6 @@ use Modules\PageBuilder\Casts\BlocksFlexibleCast;
 use Modules\PageBuilder\Contracts\IBlockIndexing;
 use Modules\PageBuilder\Contracts\IBlocksResolver;
 use Modules\PageBuilder\Enum\ContentStatus;
-use Modules\PageBuilder\Resolvers\BlocksResolver;
 use Modules\PageBuilder\Utils\Table;
 use Spatie\EloquentSortable\SortableTrait;
 use Spatie\MediaLibrary\HasMedia;

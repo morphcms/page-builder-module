@@ -13,12 +13,11 @@ use Modules\PageBuilder\Models\Content;
  */
 trait HasContents
 {
-
     protected static function bootHasContents(): void
     {
         // Create a default content after this model is crated
         static::created(function ($model) {
-            if(config('page-builder.create_default')){
+            if (config('page-builder.create_default')) {
                 $model->contents()->create([
                     'user_id' => $model instanceof CanBeOwned ? $model->ownerId() : auth()->id(),
                     'handle' => 'default',
