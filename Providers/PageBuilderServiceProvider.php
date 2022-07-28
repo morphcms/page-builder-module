@@ -7,7 +7,6 @@ use Laravel\Nova\Nova;
 use Modules\PageBuilder\Contracts\IBlocksResolver;
 use Modules\PageBuilder\Contracts\IContentReadTimeResolver;
 use Modules\PageBuilder\Events\BootPageBuilder;
-use Modules\PageBuilder\Observers\ContentObserver;
 use Modules\PageBuilder\Resolvers\BlocksResolver;
 use Modules\PageBuilder\Resolvers\DefaultIContentReadTimeResolver;
 use Modules\PageBuilder\Services\PageBuilderService;
@@ -39,7 +38,6 @@ class PageBuilderServiceProvider extends ServiceProvider
         Nova::booted(function () {
             event(new BootPageBuilder($this->app->make(PageBuilderService::class)));
         });
-
     }
 
     /**
