@@ -17,7 +17,7 @@ class ContentPolicy
      */
     public function viewAny(?User $user): bool
     {
-        if (!$user) {
+        if (! $user) {
             return true;
         }
 
@@ -29,7 +29,7 @@ class ContentPolicy
      */
     public function view(?User $user, Content $content): bool
     {
-        if(!$user){
+        if (! $user) {
             return ContentStatus::from($content->status) === ContentStatus::Published;
         }
 
