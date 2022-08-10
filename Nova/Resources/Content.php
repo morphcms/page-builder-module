@@ -84,7 +84,7 @@ class Content extends Resource
     public function actions(NovaRequest $request): array
     {
         return [
-            UpdateStatus::make(ContentStatus::class),
+            UpdateStatus::make(ContentStatus::class)->showInline(),
         ];
     }
 }

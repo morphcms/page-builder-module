@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Modules\SeoSorcery\Contracts\ICanBeSeoAnalyzed;
+use Modules\SeoSorcery\Traits\HasSeo;
+use Modules\SeoSorcery\Utils\SeoOptions;
 use function Illuminate\Events\queueable;
 use Illuminate\Support\Carbon;
 use Modules\Morphling\Traits\HasOwner;
@@ -31,9 +34,9 @@ use Whitecube\NovaFlexibleContent\Layouts\LayoutInterface;
  * @property Carbon $update_at
  * @property \Illuminate\Support\Collection<array> $blocks
  */
-class Content extends Model implements HasMedia
+class Content extends Model implements HasMedia, ICanBeSeoAnalyzed
 {
-    use InteractsWithMedia, HasFlexible, SortableTrait, HasOwner;
+    use InteractsWithMedia, HasFlexible, SortableTrait, HasOwner, HasSeo;
 
     protected $guarded = [];
 
@@ -55,9 +58,11 @@ class Content extends Model implements HasMedia
     protected static function booted()
     {
         static::updated(queueable(function (Content $content) {
-            $time = PageBuilder::calculateReadTime($content);
-            $content->read_time = $time;
-            $content->saveQuietly();
+            if ($content->isDirty('data')) {
+                $time = PageBuilder::calculateReadTime($content);
+                $content->read_time = $time;
+                $content->saveQuietly();
+            }
         }));
     }
 
@@ -73,7 +78,7 @@ class Content extends Model implements HasMedia
 
     public function scopePublished($query)
     {
-        return $query->whereStatus(ContentStatus::Published->value);
+        return $query->whereStatus(ContentStatus::Published);
     }
 
     public function scopeReview($query)
@@ -94,7 +99,7 @@ class Content extends Model implements HasMedia
     public function blocks(): Attribute
     {
         return new Attribute(
-            get: fn () => app(IBlocksResolver::class)->resolve($this)
+            get: fn() => app(IBlocksResolver::class)->resolve($this)
         );
     }
 
@@ -107,8 +112,15 @@ class Content extends Model implements HasMedia
     public function getIndexData(): string
     {
         return $this->data
-            ->filter(fn ($layout) => $layout instanceof IBlockIndexing)
-            ->map(fn (IBlockIndexing $layout) => $layout->getIndexValue())
+            ->filter(fn($layout) => $layout instanceof IBlockIndexing)
+            ->map(fn(IBlockIndexing $layout) => $layout->getIndexValue())
             ->join(PHP_EOL);
+    }
+
+    protected function setSeoOptions(): SeoOptions
+    {
+        return SeoOptions::make($this, [
+            'content' => 'data',
+        ]);
     }
 }

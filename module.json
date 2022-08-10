@@ -9,7 +9,7 @@
     ],
     "aliases": {},
     "files": [],
-    "requires": ["morphling"],
+    "requires": ["morphling", "SeoSorcery"],
     "minimumCoreVersion": "",
     "title": "Page Builder",
     "version":"0.0.0",
