@@ -7,9 +7,6 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Modules\SeoSorcery\Contracts\ICanBeSeoAnalyzed;
-use Modules\SeoSorcery\Traits\HasSeo;
-use Modules\SeoSorcery\Utils\SeoOptions;
 use function Illuminate\Events\queueable;
 use Illuminate\Support\Carbon;
 use Modules\Morphling\Traits\HasOwner;
@@ -19,6 +16,9 @@ use Modules\PageBuilder\Contracts\IBlocksResolver;
 use Modules\PageBuilder\Enum\ContentStatus;
 use Modules\PageBuilder\Facades\PageBuilder;
 use Modules\PageBuilder\Utils\Table;
+use Modules\SeoSorcery\Contracts\ICanBeSeoAnalyzed;
+use Modules\SeoSorcery\Traits\HasSeo;
+use Modules\SeoSorcery\Utils\SeoOptions;
 use Spatie\EloquentSortable\SortableTrait;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -99,7 +99,7 @@ class Content extends Model implements HasMedia, ICanBeSeoAnalyzed
     public function blocks(): Attribute
     {
         return new Attribute(
-            get: fn() => app(IBlocksResolver::class)->resolve($this)
+            get: fn () => app(IBlocksResolver::class)->resolve($this)
         );
     }
 
@@ -112,8 +112,8 @@ class Content extends Model implements HasMedia, ICanBeSeoAnalyzed
     public function getIndexData(): string
     {
         return $this->data
-            ->filter(fn($layout) => $layout instanceof IBlockIndexing)
-            ->map(fn(IBlockIndexing $layout) => $layout->getIndexValue())
+            ->filter(fn ($layout) => $layout instanceof IBlockIndexing)
+            ->map(fn (IBlockIndexing $layout) => $layout->getIndexValue())
             ->join(PHP_EOL);
     }
 

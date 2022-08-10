@@ -19,7 +19,7 @@ class ContentResource extends JsonResource
             'status' => $this->status,
             'read_time' => $this->read_time,
             'blocks' => $this->blocks,
-            'seo' => $this->whenLoaded('seo', fn() => new SeoEntityResource($this->seo)),
+            'seo' => $this->whenLoaded('seo', fn () => new SeoEntityResource($this->seo)),
         ];
     }
 }

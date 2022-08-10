@@ -7,10 +7,7 @@ use JetBrains\PhpStorm\Pure;
 use Laravel\Nova\Fields\Text;
 use Modules\PageBuilder\Contracts\IBlockHasSeo;
 use Modules\PageBuilder\Contracts\IBlockIndexing;
-use Modules\PageBuilder\Contracts\IBlocksWithSeo;
 use Modules\PageBuilder\Contracts\ICountsWords;
-use Modules\PageBuilder\Models\Content;
-use Modules\PageBuilder\Seo\ContentScanner;
 use Modules\SeoSorcery\Contracts\IScanResult;
 use Modules\SeoSorcery\Utils\SeoOptions;
 use Spatie\Translatable\HasTranslations;
@@ -70,10 +67,9 @@ class HeadingBlock extends Layout implements ICountsWords, IBlockIndexing, IBloc
     {
         $keywords = Str::of($options->getAttributeValue('keywords'))->trim()->explode(',')->filter();
 
-        if($keywords->isEmpty()){
+        if ($keywords->isEmpty()) {
             //$result->put(__('Heading Keywords'), __('There are no keywords set.'));
             return;
         }
-
     }
 }

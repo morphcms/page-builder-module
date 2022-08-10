@@ -61,6 +61,5 @@ class TextBlock extends Layout implements ICountsWords, IBlockIndexing, IBlockHa
 
     public function analyzeSeo(SeoOptions $options, IScanResult $result): void
     {
-
     }
 }
