@@ -4,6 +4,7 @@ namespace Modules\PageBuilder\Traits;
 
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\HasOne;
+use Laravel\Nova\Fields\MorphOne;
 use Modules\PageBuilder\Nova\Resources\Content;
 
 trait HasContentsNova
@@ -21,10 +22,10 @@ trait HasContentsNova
     /**
      * This allows only one content per resource
      *
-     * @return HasOne
+     * @return MorphOne
      */
-    public function contentField(): HasOne
+    public function contentField(): MorphOne
     {
-        return HasOne::make(__('Content'), 'content', Content::class);
+        return MorphOne::make(__('Content'), 'content', Content::class);
     }
 }
