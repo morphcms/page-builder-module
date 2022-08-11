@@ -11,6 +11,7 @@ use Modules\PageBuilder\Models\Content;
 
 /**
  * @mixin Model
+ *
  * @property-read Content|null contentPublished
  * @property-read Collection contentsPublished
  */
@@ -41,13 +42,12 @@ trait HasContents
             ->get()
             ->mapWithKeys(function (Content $content) {
                 try {
-                    return ['content_' . $content->locale => $content->getIndexData()];
+                    return ['content_'.$content->locale => $content->getIndexData()];
                 } catch (\Exception $exception) {
                     // Skip, or report this
                 }
 
                 return null;
-
             })
             ->filter()
             ->toArray();

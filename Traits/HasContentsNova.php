@@ -3,7 +3,6 @@
 namespace Modules\PageBuilder\Traits;
 
 use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\MorphOne;
 use Modules\PageBuilder\Nova\Resources\Content;
 
