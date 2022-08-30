@@ -25,6 +25,6 @@ trait HasContentsNova
      */
     public function contentField(): MorphOne
     {
-        return MorphOne::make(__('Content'), 'content', Content::class);
+        return MorphOne::make(__('Content'), 'content', Content::class)->hideWhenCreating();
     }
 }
